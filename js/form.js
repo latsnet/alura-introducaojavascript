@@ -6,6 +6,13 @@ botaoAdicionar.addEventListener("click", function (event) {
 
     // Extraindo informações do Paciente
     var paciente = obtemPacienteDoFormulario(form);
+
+    limparMensagensErro();
+    erros = validaPaciente(paciente);
+    if (erros.length > 0) {
+        exibeMensagensDeErro(erros);
+        return;
+    }
     
     var pacienteTr = montaTr(paciente);
 
@@ -44,4 +51,39 @@ function montaTd(dado, classe) {
     td.textContent = dado;
     td.classList.add(classe)
     return td;
+}
+
+function validaPeso(peso) {
+    return (peso > 0 && peso < 300);
+}
+
+function validaAltura(altura) {
+    return (altura > 0 && altura < 3.0);
+}
+
+function validaPaciente(paciente) {
+    var erros = [];
+    if (paciente.nome.length == 0)
+        erros.push("Nome inválido");
+    if (!validaPeso(paciente.peso))
+        erros.push("Peso inválido");
+    if (!validaAltura(paciente.altura))
+        erros.push("Altura inválida");
+    if (paciente.gordura.length == 0)
+        erros.push("Gordura inválida");
+    return erros;
+}
+
+function exibeMensagensDeErro(erros) {
+    var ul = document.querySelector("#mensagens-erro");
+    erros.forEach(function(erro) {
+        var li = document.createElement("li");
+        li.textContent = erro;
+        ul.appendChild(li);
+    });
+}
+
+function limparMensagensErro() {
+    var ul = document.querySelector("#mensagens-erro");
+    ul.innerHTML = "";
 }

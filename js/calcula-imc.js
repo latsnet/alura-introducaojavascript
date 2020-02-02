@@ -6,10 +6,10 @@ for (i = 0; i < pacientes.length; i++) {
     var peso = pacientes[i].querySelector(".info-peso").textContent;
     var altura = pacientes[i].querySelector(".info-altura").textContent;
     var infoimc = pacientes[i].querySelector(".info-imc");
-    if (peso < 0 || peso > 200) {
+    if (!validaPeso(peso)) {
         infoimc.textContent = "Peso inválido";
         pacientes[i].classList.add("paciente-invalido")
-    } else if (altura < 0 || altura > 3) {
+    } else if (!validaAltura(altura)) {
         infoimc.textContent = "Altura inválida";
         pacientes[i].classList.add("paciente-invalido")
     } else {
